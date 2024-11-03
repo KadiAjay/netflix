@@ -1,0 +1,53 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Netflix Sign in Page</title>
+        <link rel="stylesheet" href="style2.css">
+        <style>
+            input
+            {
+                color: aliceblue;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="logo">
+            <img src="logo.png" alt="">
+        </div>
+
+        <div class="container">
+            <h1>Forgot Password</h1>
+            <div class="form">
+                <input type="email" placeholder="email" id="email">
+                <input type="password" placeholder="New Password" id="newPassword">
+                <input type="submit" value="Update Password" onclick="updatePassword()">
+                <input type="checkbox">
+                <label>Remember me</label>
+                <a href="#">Need help?</a>
+        </div>
+        <script>
+            async function updatePassword() {
+                const email = document.getElementById('email').value;
+                const newPassword = document.getElementById('newPassword').value;
+                try {
+                    const response = await fetch('/api/auth/forgotPassword', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ email, newPassword })
+                    });
+                    const data = await response.json();
+                    alert(data.message);
+                    window.location.href = '/signin.html';
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                }
+            }
+        </script>
+    </body>
+    </html>
